@@ -12,3 +12,10 @@ firebase-debug.log
 firestore-debug.log
 ui-debug.log
 .DS_Store
+
+*.md
+*.mdx
+*.rst
+*.txt
+*.adoc
+!/README.md
