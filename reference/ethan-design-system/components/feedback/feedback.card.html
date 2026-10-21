@@ -1,0 +1,21 @@
+<!-- @dsCard group="Components" viewport="700x340" name="Feedback" subtitle="Dialog, Toast, Tooltip" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:24px;background:var(--mint-200);box-sizing:border-box}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font:700 11px var(--font-body);color:var(--cocoa-500);text-transform:lowercase;min-width:72px}</style>
+</head><body><div id="root"></div><script type="text/babel">
+const NS = window.ETHANDesignSystem_b7e92e;
+const { Dialog, Toast, Tooltip, Button, Icon } = NS;
+function App(){return <div style={{display:'grid',gridTemplateColumns:'1.1fr 1fr',gap:20,alignItems:'start'}}>
+<Dialog inline onClose={()=>{}} title="10% off your first order" actions={<Button block>get my code</Button>} style={{padding:28}}>Join the list for new drops, deals and the occasional pun.</Dialog>
+<div className="col" style={{gap:10}}>
+<Toast action={<Button size="sm" variant="secondary">view cart</Button>}>added to cart!</Toast>
+<Toast tone="info" onClose={()=>{}}>you're on the list</Toast>
+<Toast tone="warning">only 3 left</Toast>
+<Toast tone="error">payment didn't go through</Toast>
+<div style={{paddingTop:40,paddingLeft:40}}><Tooltip open content="per 1oz serving"><span style={{color:'var(--cocoa-900)'}}><Icon name="info"/></span></Tooltip></div>
+</div></div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

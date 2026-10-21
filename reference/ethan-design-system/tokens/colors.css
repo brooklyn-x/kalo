@@ -1,0 +1,17 @@
+:root{
+/* brand */
+--sun-500:#FDC607;--butter-300:#FFD654;--mint-200:#9AE2D7;--teal-500:#00B39D;--cocoa-900:#52282A;--cocoa-700:#6E3A3C;--cocoa-500:#8A6062;
+/* flavor / product accents */
+--orange-500:#F57F1D;--red-500:#F14724;--maroon-700:#962131;
+/* neutrals */
+--white:#FFFFFF;--cream-50:#F7F6F4;--cocoa-alpha-28:rgba(82,40,42,.28);--cocoa-alpha-12:rgba(82,40,42,.12);--scrim:rgba(82,40,42,.55);
+/* semantic: text */
+--text-strong:var(--cocoa-900);--text-body:var(--cocoa-900);--text-muted:var(--cocoa-500);--text-muted-on-color:var(--cocoa-700);--text-inverse:var(--white);--text-highlight-on-dark:var(--sun-500);
+/* semantic: surfaces */
+--surface-page:var(--white);--surface-panel:var(--mint-200);--surface-panel-warm:var(--sun-500);--surface-media:var(--teal-500);--surface-inverse:var(--cocoa-900);--surface-field:var(--white);--surface-field-muted:var(--cream-50);--surface-announcement:var(--sun-500);
+/* semantic: borders + actions */
+--border-hairline:var(--cocoa-alpha-28);--border-strong:var(--cocoa-900);--border-on-dark:rgba(255,255,255,.55);
+--action-primary:var(--cocoa-900);--action-primary-hover:var(--cocoa-700);--action-secondary:var(--butter-300);--action-secondary-hover:var(--sun-500);--focus-ring:var(--cocoa-900);
+/* status */
+--status-success:var(--teal-500);--status-warning:var(--orange-500);--status-danger:var(--maroon-700);
+}

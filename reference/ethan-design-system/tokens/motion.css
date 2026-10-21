@@ -1,0 +1,9 @@
+:root{
+--ease-out:cubic-bezier(.2,.8,.2,1); /* @kind other */
+--ease-bounce:cubic-bezier(.34,1.56,.64,1); /* @kind other */
+--ease-linear:linear; /* @kind other */
+--dur-fast:140ms; /* @kind other */
+--dur-base:240ms; /* @kind other */
+--dur-slow:420ms; /* @kind other */
+--dur-marquee:40s; /* @kind other */
+}

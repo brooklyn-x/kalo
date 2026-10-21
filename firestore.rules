@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner(uid) { return request.auth != null && request.auth.uid == uid && uid == 'REPLACE_WITH_OWNER_UID'; }
+    function n(v) { return v is number && v >= 0 && v <= 1000000; }
+    function nutrition(v) { return v is map && v.keys().hasOnly(['kcal','p','c','f']) && n(v.kcal) && n(v.p) && n(v.c) && n(v.f); }
+    function meta(v) { return v.schemaVersion == 1 && v.createdAt is number; }
+    function date(v) { return v is string && v.matches('^[0-9]{4}-[0-9]{2}-[0-9]{2}$'); }
+    function meal(v) { return v in ['breakfast','lunch','dinner','snacks']; }
+    function food(v) { return v is map && v.name is string && v.name.size() > 0 && v.name.size() <= 200 && nutrition(v.nutrients) && v.referenceAmount is number && v.referenceAmount > 0 && v.referenceAmount <= 100000 && v.referenceUnit in ['g','ml','serving','batch'] && v.portions is list && v.portions.size()>0 && v.portions.size()<=50 && v.source in ['custom','usda','openfoodfacts','recipe'] && v.favorite is bool && meta(v); }
+    match /users/{uid} {
+      allow read: if owner(uid);
+      allow create, update: if owner(uid) && request.resource.data.keys().hasOnly(['name','timezone','theme','trustedDevice','onboardingDone','age','height','weight','formula','activity','goal','schemaVersion','updatedAt']) && request.resource.data.name is string && request.resource.data.name.size() > 0 && request.resource.data.name.size()<=100 && request.resource.data.timezone is string && request.resource.data.theme in ['light','dark','system'] && request.resource.data.trustedDevice is bool && request.resource.data.onboardingDone is bool && request.resource.data.schemaVersion==1;
+      match /foods/{id} {
+        allow read: if owner(uid);
+        allow create, update: if owner(uid) && request.resource.data.id==id && food(request.resource.data);
+        allow delete: if owner(uid);
+      }
+      match /recipes/{id} {
+        allow read: if owner(uid);
+        allow create, update: if owner(uid) && request.resource.data.id==id && meta(request.resource.data) && request.resource.data.name is string && request.resource.data.name.size()>0 && request.resource.data.name.size()<=200 && nutrition(request.resource.data.nutrients) && request.resource.data.ingredients is list && request.resource.data.ingredients.size()>0 && request.resource.data.ingredients.size()<=100 && (request.resource.data.servings==null || (n(request.resource.data.servings) && request.resource.data.servings>0)) && (request.resource.data.cookedGrams==null || (n(request.resource.data.cookedGrams) && request.resource.data.cookedGrams>0)) && (request.resource.data.servings!=null || request.resource.data.cookedGrams!=null);
+        allow delete: if owner(uid);
+      }
+      match /entries/{id} {
+        allow read: if owner(uid);
+        allow create, update: if owner(uid) && request.resource.data.id==id && meta(request.resource.data) && date(request.resource.data.date) && meal(request.resource.data.meal) && request.resource.data.amount is number && request.resource.data.amount>0 && request.resource.data.amount<=100000 && nutrition(request.resource.data.nutrients) && food(request.resource.data.basis) && request.resource.data.portionId is string;
+        allow delete: if owner(uid);
+      }
+      match /goalRevisions/{id} {
+        allow read: if owner(uid);
+        allow create: if owner(uid) && request.resource.data.id==id && meta(request.resource.data) && date(request.resource.data.effectiveDate) && nutrition(request.resource.data.target) && request.resource.data.target.kcal>0 && request.resource.data.target.kcal<=10000;
+        allow update, delete: if false;
+      }
+      // Read-only legacy cache. Immutable goalRevisions are authoritative.
+      match /dayTargets/{id} {
+        allow read: if owner(uid);
+        allow write: if false;
+      }
+      match /mealCopies/{id} {
+        allow read: if owner(uid);
+        allow create, update: if owner(uid) && request.resource.data.id==id && meta(request.resource.data) && date(request.resource.data.destination) && meal(request.resource.data.meal) && request.resource.data.entryIds is list && request.resource.data.entryIds.size()<=100;
+      }
+    }
+  }
+}

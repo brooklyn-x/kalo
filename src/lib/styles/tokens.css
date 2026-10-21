@@ -1,0 +1,83 @@
+/* Original ETHAN source tokens, copied without color substitutions. */
+:root {
+  /* brand */
+  --sun-500: #fdc607;
+  --butter-300: #ffd654;
+  --mint-200: #9ae2d7;
+  --teal-500: #00b39d;
+  --cocoa-900: #52282a;
+  --cocoa-700: #6e3a3c;
+  --cocoa-500: #8a6062;
+  /* flavor / product accents */
+  --orange-500: #f57f1d;
+  --red-500: #f14724;
+  --maroon-700: #962131;
+  /* neutrals */
+  --white: #ffffff;
+  --cream-50: #f7f6f4;
+  --cocoa-alpha-28: rgba(82, 40, 42, 0.28);
+  --cocoa-alpha-12: rgba(82, 40, 42, 0.12);
+  --scrim: rgba(82, 40, 42, 0.55);
+  /* semantic: text */
+  --text-strong: var(--cocoa-900);
+  --text-body: var(--cocoa-900);
+  --text-muted: var(--cocoa-500);
+  --text-muted-on-color: var(--cocoa-700);
+  --text-inverse: var(--white);
+  --text-highlight-on-dark: var(--sun-500);
+  /* semantic: surfaces */
+  --surface-page: var(--white);
+  --surface-panel: var(--mint-200);
+  --surface-panel-warm: var(--sun-500);
+  --surface-media: var(--teal-500);
+  --surface-inverse: var(--cocoa-900);
+  --surface-field: var(--white);
+  --surface-field-muted: var(--cream-50);
+  --surface-announcement: var(--sun-500);
+  /* semantic: borders + actions */
+  --border-hairline: var(--cocoa-alpha-28);
+  --border-strong: var(--cocoa-900);
+  --border-on-dark: rgba(255, 255, 255, 0.55);
+  --action-primary: var(--cocoa-900);
+  --action-primary-hover: var(--cocoa-700);
+  --action-secondary: var(--butter-300);
+  --action-secondary-hover: var(--sun-500);
+  --focus-ring: var(--cocoa-900);
+  /* status */
+  --status-success: var(--teal-500);
+  --status-warning: var(--orange-500);
+  --status-danger: var(--maroon-700);
+}
+
+:root {
+  --brand-ink: #52282a;
+  --brand-white: #ffffff;
+  --brand-muted: #6e3a3c;
+  --ring-track: rgba(255, 255, 255, 0.7);
+  --shadow-pop: 0 16px 40px rgba(82, 40, 42, 0.2);
+}
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --white: #2b2021;
+  --cream-50: #1a1213;
+  --cocoa-900: #f6eee9;
+  --cocoa-700: #e2d2cb;
+  --cocoa-500: #b8a39f;
+  --cocoa-alpha-12: rgba(246, 238, 233, 0.1);
+  --cocoa-alpha-28: rgba(246, 238, 233, 0.24);
+  --mint-200: #1d4540;
+  --scrim: rgba(0, 0, 0, 0.62);
+  --shadow-pop: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --ring-track: rgba(246, 238, 233, 0.14);
+  --text-strong: var(--cocoa-900);
+  --text-body: var(--cocoa-900);
+  --text-muted: var(--cocoa-500);
+  --text-inverse: var(--white);
+  --action-primary: var(--cocoa-900);
+  --action-primary-hover: var(--cocoa-700);
+  --surface-field: var(--white);
+  --surface-field-muted: var(--cream-50);
+  --focus-ring: var(--cocoa-900);
+  --border-strong: var(--cocoa-900);
+  --border-hairline: var(--cocoa-alpha-28);
+}

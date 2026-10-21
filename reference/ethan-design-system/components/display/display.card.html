@@ -1,0 +1,24 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Display" subtitle="Card, ProductCard, StatTile, Badge, Seal, Tag" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:24px;background:var(--sun-500);box-sizing:border-box}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font:700 11px var(--font-body);color:var(--cocoa-500);text-transform:lowercase;min-width:72px}</style>
+</head><body><div id="root"></div><script type="text/babel">
+const NS = window.ETHANDesignSystem_b7e92e;
+const { Card, ProductCard, StatTile, Badge, Seal, Tag } = NS;
+const line='1.5px solid var(--cocoa-900)';
+function App(){return <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr) 1.1fr',gap:12,alignItems:'start'}}>
+<ProductCard tone="orange" badge="6 pack" seal={<Seal>new</Seal>} name="the original" variant="smoky chipotle" price="$24.99" size="4oz bags"/>
+<ProductCard tone="butter" badge="18 pack" name="variety pack" variant="mixed flavors" price="$24.99" size="0.8oz bags"/>
+<ProductCard tone="maroon" badge="6 pack" name="the original" variant="bbq" price="$24.99" size="4oz bags"/>
+<div className="col" style={{gap:12}}>
+<Card tone="sun" radius="lg" padding="none" style={{display:'grid',gridTemplateColumns:'1fr 1fr'}}>
+<StatTile value="4g" label="Protein*" style={{borderRight:line,borderBottom:line}}/><StatTile value="3g" label="Fiber*" style={{borderBottom:line}}/>
+<StatTile value="0" label="Nuts" style={{borderRight:line}}/><StatTile value="100%" label="Plant-based"/></Card>
+<div className="row" style={{gap:6}}><Badge>6 pack</Badge><Badge tone="cocoa">new</Badge><Badge tone="sun">best seller</Badge></div>
+<div className="row" style={{gap:6}}><Tag tone="mint">vegan</Tag><Tag tone="sun">gluten free</Tag><Tag tone="white" swatch="var(--red-500)" onClick={()=>{}}>spicy</Tag></div>
+</div></div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

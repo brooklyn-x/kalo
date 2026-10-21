@@ -1,0 +1,20 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Navigation" subtitle="AnnouncementBar, Accordion, Tabs, SliderNav" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:24px;background:var(--mint-200);box-sizing:border-box}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font:700 11px var(--font-body);color:var(--cocoa-500);text-transform:lowercase;min-width:72px}</style>
+</head><body><div id="root"></div><script type="text/babel">
+const NS = window.ETHANDesignSystem_b7e92e;
+const { AnnouncementBar, Accordion, Tabs, SliderNav } = NS;
+function App(){const [t,setT]=React.useState('all');const [u,setU]=React.useState('details');const [p,setP]=React.useState(0);
+return <div className="col" style={{gap:18}}>
+<div style={{margin:'-24px -24px 0'}}><AnnouncementBar messages={['Buy a 6 pack, get 6 more bags free!','Free shipping over $35']}/></div>
+<div className="row" style={{justifyContent:'space-between'}}><Tabs tabs={['all','puffs','chips','bundles']} value={t} onChange={setT}/><Tabs variant="underline" tabs={['details','reviews','faq']} value={u} onChange={setU}/></div>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24}}>
+<Accordion defaultOpen={0} items={[{title:'ingredients',content:'Chickpea flour, rice, sunflower oil, seasoning. Made in a facility free from peanuts and tree nuts.'},{title:'nutrition',content:'4g protein, 3g fiber per 1oz serving.'}]}/>
+<div style={{background:'var(--sun-500)',borderRadius:20,padding:'28px 20px'}}><SliderNav progress={p} span={0.45} onPrev={()=>setP(Math.max(0,p-.5))} onNext={()=>setP(Math.min(1,p+.5))} canPrev={p>0} canNext={p<1}/></div>
+</div></div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

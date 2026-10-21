@@ -1,0 +1,56 @@
+<!-- @dsCard group="Nutrition app" viewport="400x860" name="Calorie tracker" subtitle="Onboarding, dashboard, diary, add food, progress, profile — responsive" -->
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ETHAN — Calorie tracker</title><link rel="stylesheet" href="../../styles.css"><link rel="stylesheet" href="nutrition.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script><script src="data.js"></script></head><body><div id="root"></div>
+<script type="text/babel" src="Shared.jsx"></script><script type="text/babel" src="Home.jsx"></script><script type="text/babel" src="Diary.jsx"></script><script type="text/babel" src="AddFood.jsx"></script><script type="text/babel" src="Progress.jsx"></script><script type="text/babel" src="Profile.jsx"></script><script type="text/babel" src="Onboarding.jsx"></script>
+<script type="text/babel">
+const { Toast } = window.ETHANDesignSystem_b7e92e;
+const LS = 'eth-nutrition-';
+function App() {
+  const [onb, setOnb] = React.useState(() => localStorage.getItem(LS + 'onb') === '1');
+  const [tab, setTab] = React.useState(() => localStorage.getItem(LS + 'tab') || 'home');
+  const [user, setUser] = React.useState(NUT.user);
+  const [diary, setDiary] = React.useState(() => JSON.parse(JSON.stringify(NUT.diary)));
+  const [date, setDate] = React.useState(NUT.TODAY);
+  const [water, setWater] = React.useState(5);
+  const [units, setUnits] = React.useState('kg');
+  const [theme, setTheme] = React.useState(() => localStorage.getItem(LS + 'theme') || 'light');
+  React.useEffect(() => { localStorage.setItem(LS + 'theme', theme); const mq = matchMedia('(prefers-color-scheme: dark)'); const apply = () => { document.documentElement.dataset.theme = theme === 'system' ? (mq.matches ? 'dark' : 'light') : theme; }; apply(); mq.addEventListener('change', apply); return () => mq.removeEventListener('change', apply); }, [theme]);
+  const [favs, setFavs] = React.useState(NUT.favorites);
+  const [addCtx, setAddCtx] = React.useState({ meal: 'dinner', date: NUT.TODAY });
+  const [detail, setDetail] = React.useState(null);
+  const [toast, setToastS] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
+  const tt = React.useRef();
+  React.useEffect(() => { const t = setTimeout(() => setLoading(false), 700); return () => clearTimeout(t); }, [onb]);
+  React.useEffect(() => { localStorage.setItem(LS + 'tab', tab); }, [tab]);
+  const showToast = (msg, action) => { setToastS({ msg, action }); clearTimeout(tt.current); tt.current = setTimeout(() => setToastS(null), 3600); };
+  const go = k => { if (k === 'add') setAddCtx({ meal: 'dinner', date: NUT.TODAY }); setTab(k); window.scrollTo(0, 0); };
+  const openAdd = meal => { setAddCtx({ meal: meal || 'dinner', date: tab === 'diary' ? date : NUT.TODAY }); setTab('add'); window.scrollTo(0, 0); };
+  const mutate = (d, fn) => setDiary(all => { const day = JSON.parse(JSON.stringify(all[d] || { breakfast: [], lunch: [], dinner: [], snacks: [] })); fn(day); return { ...all, [d]: day }; });
+  const add = (entry, meal, d) => { mutate(d, day => day[meal].push(entry)); showToast(NUT.byId[entry.foodId].name.toLowerCase() + ' added to ' + meal + '!', { label: 'view diary', fn: () => { setDate(d); setTab('diary'); setToastS(null); } }); };
+  const remove = (meal, idx) => { const d = date; const e = diary[d][meal][idx]; mutate(d, day => day[meal].splice(idx, 1)); showToast(NUT.byId[e.foodId].name.toLowerCase() + ' removed', { label: 'undo', fn: () => { mutate(d, day => day[meal].splice(idx, 0, e)); setToastS(null); } }); };
+  const save = (entry, meal) => {
+    if (detail.mode === 'edit') { const { meal: om, idx, date: d } = detail; mutate(d, day => { day[om].splice(idx, 1); if (om === meal) day[meal].splice(idx, 0, entry); else day[meal].push(entry); }); showToast('entry updated'); }
+    else add(entry, meal, addCtx.date);
+    setDetail(null);
+  };
+  const toggleFav = id => setFavs(f => f.includes(id) ? f.filter(x => x !== id) : [...f, id]);
+  if (!onb) return <Onboarding onDone={res => { if (res) setUser(u => ({ ...u, age: res.age, sex: res.sex, height: res.height, weight: res.weight, activity: res.activity, goal: res.goal, kcal: res.kcal, macros: res.macros })); localStorage.setItem(LS + 'onb', '1'); setLoading(true); setOnb(true); setTab('home'); }} />;
+  const screen = { home: <Home user={user} day={diary[NUT.TODAY]} water={water} setWater={setWater} go={go} openAdd={openAdd} loading={loading} />,
+    diary: <Diary user={user} diary={diary} date={date} setDate={setDate} openAdd={openAdd} onDelete={remove} onEdit={(meal, idx) => { const e = diary[date][meal][idx]; setDetail({ foodId: e.foodId, mode: 'edit', meal, idx, date, init: { ...e, meal } }); }} />,
+    add: <AddFood favorites={favs} mealLabel={addCtx.meal + (addCtx.date !== NUT.TODAY ? ', ' + dateLabel(addCtx.date) : '')} onPick={id => setDetail({ foodId: id, mode: 'add', init: { qty: 1, si: 0, meal: addCtx.meal } })} onQuick={id => add({ foodId: id, qty: 1, si: 0 }, addCtx.meal, addCtx.date)} />,
+    progress: <Progress user={user} units={units} />,
+    profile: <Profile user={user} setUser={setUser} units={units} setUnits={setUnits} theme={theme} setTheme={setTheme} toast={m => showToast(m)} restart={() => { localStorage.removeItem(LS + 'onb'); setOnb(false); }} /> }[tab];
+  return <div className="nt-app">
+    <SideRail tab={tab} go={go} />
+    <main className="nt-main" key={tab}><div className="nt-fade">{screen}</div></main>
+    <BottomNav tab={tab} go={go} />
+    {detail && <FoodDetail food={NUT.byId[detail.foodId]} init={detail.init} mode={detail.mode} fav={favs.includes(detail.foodId)} toggleFav={() => toggleFav(detail.foodId)} onClose={() => setDetail(null)} onSave={save} />}
+    {toast && <div className="nt-toast"><Toast tone="success" onClose={() => setToastS(null)} action={toast.action && <Button size="sm" variant="secondary" onClick={toast.action.fn}>{toast.action.label}</Button>}>{toast.msg}</Toast></div>}
+  </div>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script></body></html>

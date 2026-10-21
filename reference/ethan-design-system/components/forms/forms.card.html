@@ -1,0 +1,28 @@
+<!-- @dsCard group="Components" viewport="700x400" name="Forms" subtitle="Select, PurchaseOption, QuantityStepper, TextField, Radio, Checkbox, Switch" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:24px;background:#fff;box-sizing:border-box}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font:700 11px var(--font-body);color:var(--cocoa-500);text-transform:lowercase;min-width:72px}</style>
+</head><body><div id="root"></div><script type="text/babel">
+const NS = window.ETHANDesignSystem_b7e92e;
+const { Select, PurchaseOption, QuantityStepper, TextField, Radio, Checkbox, Switch, Button } = NS;
+function App(){const [f,setF]=React.useState('og');const [m,setM]=React.useState('sub');const [q,setQ]=React.useState(1);const [c,setC]=React.useState(true);const [s,setS]=React.useState(true);
+const flavors=[{value:'og',label:'the original',swatch:'var(--teal-500)'},{value:'sm',label:'smoky chipotle',swatch:'var(--orange-500)'},{value:'sp',label:'sriracha heat',swatch:'var(--red-500)'}];
+return <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:16}}>
+<div className="col" style={{background:'var(--mint-200)',padding:16,borderRadius:20,gap:10}}>
+<Select label="flavor" options={flavors} value={f} onChange={setF}/>
+<PurchaseOption value="once" label="one-time purchase" price="$24.99" selected={m==='once'} onSelect={setM}/>
+<PurchaseOption value="sub" label="subscribe & save" price="$21.24" compareAt="$24.99" selected={m==='sub'} onSelect={setM}><Select variant="muted" options={[{value:'2',label:'Delivery every 2 weeks'},{value:'4',label:'Delivery every 4 weeks'}]}/></PurchaseOption>
+<div style={{display:'flex',gap:10}}><QuantityStepper value={q} onChange={setQ}/><Button block>add to cart</Button></div>
+</div>
+<div className="col">
+<TextField placeholder="zip code" variant="outline"/>
+<TextField placeholder="E-mail" variant="outline" error="please enter a valid email"/>
+<div style={{background:'var(--cocoa-900)',padding:14,borderRadius:20}}><TextField variant="inverse" placeholder="E-mail" onSubmit={()=>{}}/></div>
+<div className="row"><Radio name="r" label="standard" defaultChecked/><Radio name="r" label="express"/><Radio name="r" label="pickup" disabled/></div>
+<div className="row"><Checkbox label="email me deals" checked={c} onChange={e=>setC(e.target.checked)}/><Switch label="subscribe" checked={s} onChange={e=>setS(e.target.checked)}/></div>
+</div></div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

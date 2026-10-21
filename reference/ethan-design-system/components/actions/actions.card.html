@@ -1,0 +1,17 @@
+<!-- @dsCard group="Components" viewport="700x300" name="Actions" subtitle="Button + IconButton — variants, sizes, states" -->
+<!doctype html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>body{margin:0;padding:24px;background:#fff;box-sizing:border-box}.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}.col{display:flex;flex-direction:column;gap:14px}.lbl{font:700 11px var(--font-body);color:var(--cocoa-500);text-transform:lowercase;min-width:72px}</style>
+</head><body><div id="root"></div><script type="text/babel">
+const NS = window.ETHANDesignSystem_b7e92e;
+const { Button, IconButton, Icon } = NS;
+function App(){return <div className="col">
+<div className="row"><span className="lbl">variants</span><Button>add to cart</Button><Button variant="secondary">buy on marketplace</Button><Button variant="outline">shop all</Button><Button variant="white">find a store</Button></div>
+<div className="row"><span className="lbl">sizes</span><Button size="sm">small</Button><Button>medium</Button><Button size="lg" iconRight={<Icon name="arrow-right" size={18} strokeWidth={2}/>}>large</Button><Button disabled>disabled</Button></div>
+<div className="row" style={{background:'var(--mint-200)',padding:16,borderRadius:20}}><span className="lbl" style={{color:'var(--cocoa-700)'}}>icon</span><IconButton icon="chevron-left" label="prev"/><IconButton icon="chevron-right" label="next"/><IconButton icon="chevron-right" label="next" variant="white" size={32}/><IconButton icon="shopping-bag" label="cart" variant="solid"/><IconButton icon="x" label="close" variant="ghost"/><IconButton icon="chevron-right" label="next" disabled/></div>
+</div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>
